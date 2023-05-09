@@ -4,17 +4,19 @@
 typedef struct {
   int inputA;
   int inputB;
+  int pwmA;
   int inputC;
   int inputD;
+  int pwmB;
 } Bridge;
 
 void setupBridge(Bridge *b);
 
-void moveForward(Bridge *b);
-void moveBackward(Bridge *b);
+void moveForward(Bridge *b, int speed);
+void moveBackward(Bridge *b, int speed);
 
-void turnLeft(Bridge *b);
-void turnRight(Bridge *b);
+void turnLeft(Bridge *b, int speed);
+void turnRight(Bridge *b, int speed);
 
 void stop(Bridge *b);
 

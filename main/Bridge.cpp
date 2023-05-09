@@ -8,37 +8,39 @@ void setupBridge(Bridge *b) {
   pinMode(b->inputD, OUTPUT);
 }
 
-void moveForward(Bridge *b) {
-  digitalWrite(b->inputA, HIGH);
-  digitalWrite(b->inputB, LOW);
-  digitalWrite(b->inputC, HIGH);
-  digitalWrite(b->inputD, LOW);
-}
-
-void moveBackward(Bridge *b) {
-  digitalWrite(b->inputA, LOW);
-  digitalWrite(b->inputB, HIGH);
-  digitalWrite(b->inputC, LOW);
-  digitalWrite(b->inputD, HIGH);
-}
-
-void turnLeft(Bridge *b) {
-  digitalWrite(b->inputA, LOW);
-  digitalWrite(b->inputB, HIGH);
-  digitalWrite(b->inputC, HIGH);
-  digitalWrite(b->inputD, LOW);
-}
-
-void turnRight(Bridge *b) {
-  digitalWrite(b->inputA, HIGH);
-  digitalWrite(b->inputB, LOW);
-  digitalWrite(b->inputC, LOW);
-  digitalWrite(b->inputD, HIGH);
-}
-
 void stop(Bridge *b) {
-  digitalWrite(b->inputA, HIGH);
-  digitalWrite(b->inputB, HIGH);
-  digitalWrite(b->inputC, HIGH);
-  digitalWrite(b->inputD, HIGH);
+  analogWrite(b->pwmA, 0);
+  analogWrite(b->pwmB, 0);
+}
+
+void moveForward(int *pinA, int *pinB, int *pwm, int speed) {
+  digitalWrite(*pinA, HIGH);
+  digitalWrite(*pinB, LOW);
+  analogWrite(*pwm, speed);
+}
+
+void moveBackward(int *pinA, int *pinB, int *pwm, int speed) {
+  digitalWrite(*pinA, LOW);
+  digitalWrite(*pinB, HIGH);
+  analogWrite(*pwm, speed);
+}
+
+void moveForward(Bridge *b, int speed) {
+  moveForward(b->inputA, b->inputB, b->pwmA, speed);
+  moveForward(b->inputC, b->inputD, b->pwmB, speed);
+}
+
+void moveBackward(Bridge *b, int speed) {
+  moveBackward(b->inputA, b->inputB, b->pwmA, speed);
+  moveBackward(b->inputC, b->inputD, b->pwmB, speed);
+}
+
+void turnLeft(Bridge *b, int speed) {
+  moveBackward(b->inputA, b->inputB, b->pwmA, speed);
+  moveForward(b->inputC, b->inputD, b->pwmB, speed);
+}
+
+void turnRight(Bridge *b, int speed) {
+  moveForward(b->inputA, b->inputB, b->pwmA, speed);
+  moveBackward(b->inputC, b->inputD, b->pwmB, speed);
 }

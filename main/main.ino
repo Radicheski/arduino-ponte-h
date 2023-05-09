@@ -10,16 +10,16 @@ void setup() {
 }
   
 void loop() {
-  moveForward(&ponte);
+  moveForward(&ponte, 255);
   delay(DELAY);
 
-  turnLeft(&ponte);
+  turnLeft(&ponte, 255);
   delay(DELAY);
 
-  turnRight(&ponte);
+  turnRight(&ponte, 255);
   delay(DELAY);
 
-  moveBackward(&ponte);
+  moveBackward(&ponte, 255);
   delay(DELAY);
 
   stop(&ponte);
